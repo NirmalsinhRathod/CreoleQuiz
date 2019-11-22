@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "800421924517",
+    "firebase_url": "https://creole-38e30.firebaseio.com",
+    "project_id": "creole-38e30",
+    "storage_bucket": "creole-38e30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800421924517:android:4d50437c9a9bbe6814474c",
+        "android_client_info": {
+          "package_name": "com.creole"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800421924517-koekfet1vppi6u9tv42l014kbmtvgs27.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.creole",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "800421924517-icfi3l4qk8217rmhtbk01u3so5fesmu8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsaUGuVxhpif9Uxre_yO9CwoVLPBidkR4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800421924517-icfi3l4qk8217rmhtbk01u3so5fesmu8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "800421924517-ls84040gtvfr0f4klohjnlcobhks25q0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.creole.quiz"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

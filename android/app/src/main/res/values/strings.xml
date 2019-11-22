@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Creole</string>
+    <!--<string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">njxc3We3ZFA2BuXBtHl59ibfK1vv4531a807-f8c8-4681-a923-2153c843816d </string>-->
+    <string name="reactNativeCodePush_androidDeploymentKey" moduleConfig="true" translatable="false">njxc3We3ZFA2BuXBtHl59ibfK1vv4531a807-f8c8-4681-a923-2153c843816d</string>
+    <string name="appCenterCrashes_whenToSendCrashes" moduleConfig="true" translatable="false">DO_NOT_ASK_JAVASCRIPT</string>
+    <string name="appCenterAnalytics_whenToEnableAnalytics" moduleConfig="true" translatable="false">ALWAYS_SEND</string>
+</resources>

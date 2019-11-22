@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">800421924517-icfi3l4qk8217rmhtbk01u3so5fesmu8.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://creole-38e30.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">800421924517</string>
+    <string name="google_api_key" translatable="false">AIzaSyDsaUGuVxhpif9Uxre_yO9CwoVLPBidkR4</string>
+    <string name="google_app_id" translatable="false">1:800421924517:android:4d50437c9a9bbe6814474c</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDsaUGuVxhpif9Uxre_yO9CwoVLPBidkR4</string>
+    <string name="google_storage_bucket" translatable="false">creole-38e30.appspot.com</string>
+    <string name="project_id" translatable="false">creole-38e30</string>
+</resources>

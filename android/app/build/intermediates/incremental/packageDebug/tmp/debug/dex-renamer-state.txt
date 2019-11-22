@@ -1,0 +1,4 @@
+#Fri Nov 15 18:24:58 IST 2019
+base.0=/Users/creolemacmini02/Documents/CreoleProject/NEHA/ReactProjects/QuizWordCamp/creolequiz/android/app/build/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex

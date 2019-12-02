@@ -7,6 +7,7 @@ import styles from './style';
 import Header from '../../components/atoms/Header';
 import * as IMG from '../../resources/index';
 import color from '../../color'
+import * as ATOMS from '../../components/atoms'
 
 class AdminHome extends Component {
 	constructor() {
@@ -74,7 +75,7 @@ class AdminHome extends Component {
 		return (
 			<View style={styles.quizListContainer}>
 				<View style={{ height: 60, justifyContent: 'center', alignContent: 'center', flexDirection: 'column', borderBottomColor: color.lightGray, borderBottomWidth: 0.5 }}>
-					<Text style={{ alignSelf: 'center' }}>Select a quiz</Text>
+					<Text style={styles.selectquiztext}>Select a quiz</Text>
 				</View>
 				<FlatList
 					scrollEnabled={false}
@@ -98,7 +99,7 @@ class AdminHome extends Component {
 								this.props.navigation.navigate('Quiz')
 							} */}
 							{/* style={{ justifyContent: 'center', marginHorizontal: 10, alignSelf: 'center', marginTop: 20, alignItems: 'center', height: 50, backgroundColor: 'skyblue', width: width }}> */}
-							<Text>{item.key}</Text>
+							<Text style={styles.text}>{item.key}</Text>
 						</TouchableOpacity>
 					)}
 				/>
@@ -125,6 +126,7 @@ class AdminHome extends Component {
 	render() {
 		return (
 			<View style={styles.container}>
+				<ATOMS.InternectConnectivity />
 				<Header
 					leftImage={IMG.IC_LOGOUT}
 					// rightImage={this.state.isAdmin === 1 && IMG.IC_SETTING}

@@ -8,6 +8,7 @@ export default {
 	themColorTransparent: '#F9BFA3',
 	darkGray: '#5A5A5A',
 	black: '#000000',
+	white: '#ffffff',
 	grayBG: '#ECECEC',
 	grayBorder: '#80808050',
 	lightBlack: '#515151',

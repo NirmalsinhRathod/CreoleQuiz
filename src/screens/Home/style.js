@@ -1,7 +1,8 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 import color from '../../color';
 import * as fonts from '../../font/index';
 const containerHeight = Dimensions.get('window').height - 70
+const height = Dimensions.get('window').height
 export default styles = StyleSheet.create({
     container: {
         width: '100%',
@@ -77,11 +78,13 @@ export default styles = StyleSheet.create({
     },
     btnStartQuizTitle: {
         paddingHorizontal: 15,
-        color: color.blue
+        color: color.blue,
+        fontFamily: fonts.Medium
     },
     btnStartQuizTitleDisable: {
         paddingHorizontal: 15,
-        color: color.lightGray
+        color: color.lightGray,
+        fontFamily: fonts.Medium
     },
     itemview: {
         width: '100%',
@@ -99,7 +102,8 @@ export default styles = StyleSheet.create({
     },
     scoretext: {
         fontSize: 16,
-        color: color.darkGray
+        color: color.darkGray,
+        fontFamily: fonts.Bold
         //fontWeight:'bold'
     },
     startbtnview: {
@@ -108,9 +112,37 @@ export default styles = StyleSheet.create({
     },
     attemptedtxt: {
         fontSize: 16,
-        color: color.lightGray,
+        color: color.blue,
         marginTop: 10,
         marginLeft: 10,
+        fontFamily: fonts.RegularItalic
 
+    },
+    actionButtonIcon: {
+        width: 50,
+        height: 50,
+        zIndex: 50,
+        borderRadius: 25,
+        bottom: Platform.OS === 'ios' ? (height * 0.1) : (height * 0.04),
+        right: 20,
+        backgroundColor: color.blue,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    actionview: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end'
+    },
+    actionImg: {
+        width: 20,
+        height: 20
+    },
+    ruleText: {
+        fontSize: 12,
+        fontFamily: fonts.MediumItalic,
+        color: 'white'
     }
 });

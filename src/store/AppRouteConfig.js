@@ -1,6 +1,6 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { Splash, Home, Login, SignUp, Admin, SearchList, Quiz, EndQuiz, AdminHome } from '../screens';
+import { Splash, Home, Login, SignUp, Admin, SearchList, Quiz, EndQuiz, AdminHome, Rules } from '../screens';
 
 const AppRouteConfig = createStackNavigator(
 	{
@@ -12,9 +12,15 @@ const AppRouteConfig = createStackNavigator(
 		},
 		Home: { screen: Home },
 		AdminHome: { screen: AdminHome },
-		Quiz: { screen: Quiz },
+		Quiz: {
+			screen: Quiz,
+			navigationOptions: {
+				gesturesEnabled: false
+			}
+		},
 		EndQuiz: { screen: EndQuiz },
 		SignUp: { screen: SignUp },
+		Rules: { screen: Rules },
 		Login: {
 			screen: Login,
 			navigationOptions: {

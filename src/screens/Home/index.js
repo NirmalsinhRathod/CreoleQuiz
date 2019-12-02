@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Alert, Platform, Dimensions, FlatList, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, Platform, Dimensions, FlatList, TextInput, Image } from 'react-native';
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import { login } from '../../store/Auth/actions';
@@ -8,6 +8,14 @@ import Header from '../../components/atoms/Header';
 import * as fonts from '../../font/index';
 import * as IMG from '../../resources/index';
 import color from '../../color'
+import { StackActions, NavigationActions } from 'react-navigation';
+import NetInfo from "@react-native-community/netinfo";
+import { FloatingAction } from "react-native-floating-action";
+
+import * as ATOM from '../../components/atoms/InternetConnectivity'
+
+
+const offlineText = 'Please check your internet connection.'
 
 class Home extends Component {
 	constructor() {
@@ -36,6 +44,7 @@ class Home extends Component {
 		this.getToken();
 	}
 	componentDidMount() {
+
 		firebase.database().ref('users/' + firebase.auth().currentUser.uid).once('value').then((snapshot) => {
 			console.log("User Info ==> " + JSON.stringify(snapshot.val()))
 			let isAdmin = false;
@@ -176,22 +185,37 @@ class Home extends Component {
 				onPress: () => {
 					firebase.auth().signOut();
 					setTimeout(() => {
-						this.props.navigation.navigate('Login');
+						this.moveToLogin()
 					}, 100);
 				}
 			}
 		]);
+	}
+	moveToLogin() {
+		const resetAction = StackActions.reset({
+			index: 0,
+			actions: [NavigationActions.navigate({ routeName: 'Login' })],
+		});
+		this.props.navigation.dispatch(resetAction);
 	}
 	renderStartButton() {
 		var newQuizStr = this.state.activeQuiz.replace('Quiz', '');
 		return (
 			<TouchableOpacity
 				onPress={() => {
+					NetInfo.isConnected.fetch().then(isConnected => {
+						if (isConnected === true) {
 
-					this.props.navigation.navigate('Quiz', {
-						currentActiveQuiz: newQuizStr,
-						userInfo: this.state.userInfo
+							this.props.navigation.navigate('Quiz', {
+								currentActiveQuiz: newQuizStr,
+								userInfo: this.state.userInfo
+							});
+						} else {
+							alert(offlineText)
+						}
+
 					});
+
 				}}
 				style={styles.btnStartQuiz}>
 				<Text style={styles.btnStartQuizTitle}>Start Quiz</Text>
@@ -199,25 +223,40 @@ class Home extends Component {
 		);
 	}
 	renderItem = ({ item, index }) => {
-		// let data = Object.values(item.quiz)
 		let score = 0
+		let attempted_que = 0
 		let isActive = false
 		if (item.currentquiz === this.state.activeQuiz) {
-			//this.state.taken = 1;
 			isActive = true
-		} else {
-			isActive = false
 		}
+		let allAttQuizName = []
 		this.state.quizData.filter((value) => {
-			//console.log("Value ==> " + JSON.stringify(this.state.quizData))
+			allAttQuizName.push(value.key)
 			if (value.key === item.currentquiz) {
 				score = value.score
+				attempted_que = value.attempted_que
 				isActive = false
 			}
 		})
 
-		let compareString = this.state.activeQuiz;
-		//console.log(this.state.activeQuiz)
+		let isQuizDisable = false
+		let isQuiz3 = false
+		if (this.state.activeQuiz === 'Quiz3' && item.currentquiz === 'Quiz3') {
+			isQuiz3 = true
+			let count = 0
+			this.state.quizData.filter((value) => {
+				if (value.key === 'Quiz1' || value.key === 'Quiz2') {
+					count = count + 1
+				}
+			})
+			if (count === 2) {
+				isQuizDisable = false
+			} else {
+				isQuizDisable = true
+			}
+			// Here we need to check if user is already attempted previous quiz or not
+
+		}
 
 		return (
 			<View style={styles.itemview}>
@@ -225,36 +264,53 @@ class Home extends Component {
 					<Text style={styles.quiztext}>
 						{item.quizName}
 					</Text>
-					<Text style={[styles.scoretext, { display: score > 0 ? false : true }]}>
-						{'Score: ' + score + '/' + this.state.numberOfQue}
-					</Text>
+					{
+						attempted_que > 0 && <Text style={styles.scoretext}>
+							{'Score: ' + score + '/' + this.state.numberOfQue}
+						</Text>
+					}
 				</View>
-				<View style={styles.startbtnview}>
-					<TouchableOpacity
-						disabled={isActive ? false : true}
-						onPress={() => {
-							//console.log(JSON.stringify(this.state.userInfo))
-							let newQuizStr = this.state.activeQuiz.replace('Quiz', '');
-							this.props.navigation.navigate('Quiz', {
-								currentActiveQuiz: newQuizStr,
-								userInfo: this.state.userInfo
-							});
-						}}
-						style={isActive ? styles.btnStartQuiz : styles.btnStartQuizDisable}>
-						<Text style={isActive ? styles.btnStartQuizTitle : styles.btnStartQuizTitleDisable}>START QUIZ</Text>
-					</TouchableOpacity>
-					<Text
-						style={[styles.attemptedtxt, { display: score > 0 ? false : true }]}>
-						{'Already attempted'}
-					</Text>
-				</View>
+
+				{
+					!isQuizDisable &&
+
+					<View style={styles.startbtnview}>
+						<TouchableOpacity
+							disabled={isActive ? false : true}
+							onPress={() => {
+								let newQuizStr = this.state.activeQuiz.replace('Quiz', '');
+								this.props.navigation.navigate('Quiz', {
+									currentActiveQuiz: newQuizStr,
+									userInfo: this.state.userInfo
+								});
+							}}
+							style={isActive ? styles.btnStartQuiz : styles.btnStartQuizDisable}>
+							<Text style={isActive ? styles.btnStartQuizTitle : styles.btnStartQuizTitleDisable}>START QUIZ</Text>
+						</TouchableOpacity>
+						{
+							attempted_que > 0 && <Text
+								style={styles.attemptedtxt}>
+								{'Already attempted'}
+							</Text>
+						}
+					</View>
+				}
+
+				{
+					isQuizDisable &&
+					<View style={styles.startbtnview}>
+						<Text
+							style={styles.attemptedtxt}>
+							Sorry, You haven't attempted previous Quiz
+						</Text>
+					</View>
+				}
 
 
 				<View style={{
 					width: '100%',
 					borderBottomColor: color.lightGray,
 					borderBottomWidth: 1,
-					//marginTop: 10
 				}}></View>
 			</View >
 		);
@@ -308,16 +364,27 @@ class Home extends Component {
 	render() {
 		return (
 			<View >
+
 				<Header
 					leftImage={IMG.IC_LOGOUT}
-					// rightImage={this.state.isAdmin === 1 && IMG.IC_SETTING}
-					// rightButtonPress={() => this.state.isAdmin === 1 && this.props.navigation.navigate('Admin')}
-					rightImage={IMG.IC_SETTING}
 					leftButtonPress={this.logout.bind(this)}
 					textColor={'white'}
-					rightButtonPress={() => this.state.isAdmin === 1 && this.props.navigation.navigate('Admin')}
 					title={'HOME'}
 				/>
+				<View style={styles.actionview}>
+					<TouchableOpacity
+						style={styles.actionButtonIcon}
+						onPress={() => {
+							this.props.navigation.navigate('Rules')
+						}}>
+						<Text style={styles.ruleText}>Rules</Text>
+						{/* <Image
+							source={IMG.IC_INFO}
+							style={styles.actionImg}
+						/> */}
+					</TouchableOpacity>
+
+				</View>
 				<View style={styles.container}>
 					<FlatList
 						scrollEnabled={true}
@@ -326,7 +393,9 @@ class Home extends Component {
 						renderItem={this.renderItem}
 					// keyExtractor={item => item.id}
 					/>
+
 				</View>
+
 				{/* <View style={{ height: '90%',backgroundColor:'red' }}>
 					
 				</View> */}

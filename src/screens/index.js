@@ -7,4 +7,5 @@ import Quiz from './Quiz';
 import EndQuiz from './EndQuiz';
 import Admin from './Admin';
 import AdminHome from './AdminHome';
-export { Home, Splash, Login, SignUp, Chat, Admin, Quiz, EndQuiz, AdminHome };
+import Rules from './Rules';
+export { Home, Splash, Login, SignUp, Chat, Admin, Quiz, EndQuiz, AdminHome, Rules };

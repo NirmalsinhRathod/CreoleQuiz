@@ -1,9 +1,12 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import * as constant from '../../constants/constant';
+import * as fonts from '../../font'
 import color from '../../color';
-const newHeight = Dimensions.get('screen').height - 400
+const newHeight = Dimensions.get('screen').height - 300
 let screenHeight = Dimensions.get('screen').height
+let screenWidth = Dimensions.get('screen').width
 let topMargin = ((screenHeight - 222) / 2)
+
 export default (styles = StyleSheet.create({
 	container: {
 		height: newHeight,
@@ -11,7 +14,8 @@ export default (styles = StyleSheet.create({
 		//alignItems: 'center',
 		marginLeft: 20,
 		marginRight: 20,
-		justifyContent: 'center'
+		justifyContent: 'center',
+
 	},
 	childview: {
 		height: '100%',
@@ -25,7 +29,9 @@ export default (styles = StyleSheet.create({
 		marginTop: 100
 	},
 	placeholdertext: {
-		color: color.darkGray,
+		color: color.black,
+		fontFamily: fonts.Regular,
+		fontSize: 16,
 		//fontStyle:'italic',
 		marginTop: 10,
 		marginLeft: 10
@@ -35,7 +41,9 @@ export default (styles = StyleSheet.create({
 		width: '100%',
 		backgroundColor: 'white',
 		borderColor: color.lightGray,
-		color: color.darkGray,
+		color: color.black,
+		fontFamily: fonts.Regular,
+		fontSize: 16,
 		borderWidth: 1,
 		paddingLeft: 10,
 		paddingRight: 5,
@@ -69,8 +77,16 @@ export default (styles = StyleSheet.create({
 	},
 	logintext: {
 		color: 'white',
-		fontWeight: 'bold',
+		fontFamily: fonts.Bold,
+		fontSize: 16,
 
+	},
+	otpText: {
+		color: 'white',
+		fontFamily: fonts.Bold,
+		//fontWeight: 'bold',
+		width: screenWidth,
+		textAlign: 'center',
 	},
 	submitButton: {
 		alignSelf: 'center',
@@ -80,7 +96,8 @@ export default (styles = StyleSheet.create({
 		backgroundColor: color.blue,
 		borderRadius: 20,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+
 	},
 	resendButton: {
 		alignSelf: 'center',
@@ -116,7 +133,9 @@ export default (styles = StyleSheet.create({
 		marginTop: 10
 	},
 	confirmationCode: {
-		marginTop: 20
+		marginTop: 20,
+		color: color.darkGray,
+		fontFamily: fonts.Regular,
 	},
 	editButton: {
 		padding: 10,

@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import color from '../../color'
+import * as fonts from '../../font'
 
 export default styles = StyleSheet.create({
     container: {
@@ -53,6 +54,8 @@ export default styles = StyleSheet.create({
         marginLeft: 25,
         paddingRight: 20,
         minWidth: 250,
+        fontFamily: fonts.Regular,
+        fontSize: 16
         // paddingRight: '12%'
 
     },
@@ -69,7 +72,7 @@ export default styles = StyleSheet.create({
     cancelText: {
         color: color.blue,
         fontSize: 15,
-        fontWeight: 'bold',
+        fontFamily: fonts.Bold,
         position: 'absolute',
         left: 5,
     },
@@ -120,13 +123,13 @@ export default styles = StyleSheet.create({
     },
     scoreText: {
         fontSize: 15,
-        fontWeight: 'bold',
+        fontFamily: fonts.Bold,
         color: 'white'
     },
     searchBar: {
         height: 80,
         width: '100%',
-        marginTop: 45,
+        marginTop: 10,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -149,5 +152,21 @@ export default styles = StyleSheet.create({
         height: 20,
         width: 20,
         marginLeft: 30
+    },
+    text: {
+        fontFamily: fonts.Medium,
+        fontSize: 15,
+        color: color.darkGray
+    },
+    nametext: {
+        fontSize: 18,
+        fontFamily: fonts.Bold,
+    },
+    emailtext: {
+        fontSize: 15,
+        fontFamily: fonts.Medium,
+        marginTop: 5,
+        color: color.darkGray
     }
+
 });

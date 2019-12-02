@@ -8,6 +8,7 @@ const ans_width = Dimensions.get('window').width * 0.4
 const que_width = Dimensions.get('window').width
 const ansview = Dimensions.get('window').width * 0.8
 const containerHeight = Dimensions.get('window').height * 0.7
+const btnHeight = Dimensions.get('window').height * 0.2
 const indicatorHeight = Dimensions.get('window').height - 80
 export default styles = StyleSheet.create({
     container: {
@@ -23,15 +24,17 @@ export default styles = StyleSheet.create({
         //backgroundColor: 'white',
     },
     bottombuttonview: {
-        //height: 50,
+        // height: btnHeight,
         //position: 'absolute',
         //backgroundColor: 'red',
         //bottom: containerHeight,
-        marginLeft: 10,
-        justifyContent: 'center',
-        alignSelf: 'center',
+        //marginLeft: 10,
+        height: 70,
+        justifyContent: 'space-around',
+        alignItems: 'center',
         flexDirection: 'row',
-        marginTop: 20
+        //marginTop: 20,
+        // backgroundColor: 'red'
     },
     question: {
         width: que_height,
@@ -56,11 +59,12 @@ export default styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+
     },
     nextbutton: {
         width: 150,
-        height: 35,
+        height: 45,
         borderRadius: 20,
         backgroundColor: 'white',
         justifyContent: 'center',
@@ -68,6 +72,7 @@ export default styles = StyleSheet.create({
         borderColor: color.blue,
         borderWidth: 1,
         marginLeft: 10,
+
         // backgroundColor: 'skyblue',
         // width: ans_width,
         // marginLeft: 10,
@@ -82,14 +87,24 @@ export default styles = StyleSheet.create({
         // marginTop: 20,
         paddingTop: 10,
         //height: 40,
-        //marginLeft: 10,
+        marginLeft: 10,
         // justifyContent: 'center',
         // alignItems: 'center',
         //backgroundColor: 'red',
         width: ansview
     },
     ansText: {
-        marginLeft: 10, color: color.darkGray
+        marginLeft: 10,
+        color: color.darkGray,
+        fontFamily: fonts.Regular,
+        width: '90%',
+        fontSize: 15
+    },
+    nextText: {
+        //marginLeft: 10,
+        color: color.blue,
+        fontFamily: fonts.Bold,
+        fontSize: 15
     },
     ansbutton: {
         width: '100%',
@@ -122,6 +137,7 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         width: '100%',
+        height: '100%',
         height: indicatorHeight
     },
     quenotext: {

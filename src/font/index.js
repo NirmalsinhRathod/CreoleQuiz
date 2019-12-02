@@ -22,7 +22,7 @@ import { Platform } from 'react-native';
 
 //export default {
 export const LightItalic = Platform.OS === 'ios' ? 'BrandonText-LightItalic' : 'BrandonTextLightItalic';
-export const RegularItali = Platform.OS === 'ios' ? 'BrandonText-RegularItalic' : 'BrandonTextRegularItalic';
+export const RegularItalic = Platform.OS === 'ios' ? 'BrandonText-RegularItalic' : 'BrandonTextRegularItalic';
 export const BlackItalic = Platform.OS === 'ios' ? 'BrandonText-BlackItalic' : 'BrandonTextBlackItalic';
 export const Regular = Platform.OS === 'ios' ? 'BrandonText-Regular' : 'BrandonTextRegular';
 export const ThinItalic = Platform.OS === 'ios' ? 'BrandonText-ThinItalic' : 'BrandonTextThinItalic';

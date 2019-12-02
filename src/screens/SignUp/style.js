@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import * as constant from '../../constants/constant';
+import * as fonts from '../../font'
 import color from '../../color'
 const dropdownwidth = Dimensions.get('window').width - 45
 const containerHeight = Dimensions.get('window').height
@@ -11,27 +12,30 @@ export default styles = StyleSheet.create({
     //alignItems: 'flex-start',
     marginLeft: 20,
     marginRight: 20,
-    marginTop: 20,
+    //paddingTop: 10,
     //justifyContent: 'center',
   },
   placeholdertext: {
-    color: color.darkGray,
-    //fontStyle:'italic',
+    color: color.black,
+    fontFamily: fonts.Regular,
     marginTop: 10,
     marginLeft: 5,
-    fontSize: 12
+    fontSize: 14,
+    padding: 5
   },
   textfieldStyle: {
     height: 40,
     width: '90%',
     backgroundColor: 'white',
     borderColor: color.lightGray,
-    color: color.darkGray,
     borderWidth: 1,
     paddingLeft: 10,
     paddingRight: 5,
     borderRadius: 20,
-    marginTop: 10
+    marginTop: 5,
+    fontSize: 14,
+    color: color.black,
+    fontFamily: fonts.Regular,
   },
   textAreaStyle: {
     height: 150,
@@ -52,8 +56,11 @@ export default styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  loginText: {
-    paddingLeft: 10
+  logintext: {
+    color: 'white',
+    fontFamily: fonts.Bold,
+    fontSize: 16,
+
   },
   loginLink: {
     paddingLeft: 5,
@@ -76,7 +83,9 @@ export default styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 15,
     position: 'absolute',
-    right: 10
+    right: 10,
+    color: color.black,
+    fontFamily: fonts.Regular,
   },
   signupButton: {
     backgroundColor: color.blue,
@@ -90,7 +99,12 @@ export default styles = StyleSheet.create({
   },
   dropdownview: {
     width: dropdownwidth,
-    marginLeft: 5
+    marginLeft: 10
+  },
+  dropdwontext: {
+    fontFamily: fonts.Regular,
+    fontSize: 14,
+    color: color.black
   },
   item: {
     borderWidth: 1,
@@ -98,7 +112,9 @@ export default styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   lable: {
-    color: color.darkGray
+    color: color.darkGray,
+    fontFamily: fonts.Regular,
+    fontSize: 14,
   },
   itemSelected: {
     backgroundColor: color.lightBlue,

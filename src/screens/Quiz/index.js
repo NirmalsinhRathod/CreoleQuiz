@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Alert, ActivityIndicator, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, ActivityIndicator, FlatList, BackHandler } from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
 import { connect } from 'react-redux';
 import firebase from 'react-native-firebase';
 import { login } from '../../store/Auth/actions';
@@ -8,6 +9,8 @@ import Button from '../../components/atoms/Button';
 import Header from '../../components/atoms/Header';
 import * as IMG from '../../resources/index';
 import color from '../../color';
+import OutLineButton from '../../components/atoms/Button/OutLineButton';
+
 import RadioGroup, { Radio } from "react-native-radio-input";
 
 import RadioButton from '../../components/atoms/RadioButton'
@@ -30,6 +33,7 @@ class Quiz extends Component {
 			numberQuestions: 0,
 			currentQuiz: 0,
 			isLoading: true,
+			isConnected: true
 
 		};
 		this.AnsList = [];
@@ -45,7 +49,18 @@ class Quiz extends Component {
 	}
 
 	componentDidMount() {
-		// Orientation.lockToPortrait();
+		BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+	}
+
+	componentWillUnmount() {
+		BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+	}
+	onBackPress = () => {
+		this.endQuiz()
+		return true;
+	};
+	completeQuiz() {
+
 	}
 	getQuestionsList() {
 		let numberQuestions = 20;
@@ -165,7 +180,20 @@ class Quiz extends Component {
 			});
 	}
 
+	checkConnectivity() {
+		NetInfo.isConnected.fetch().then(isConnected => {
+			if (isConnected === true) {
+				this.setResultData()
+				//this.setState({ isConnected: true })
+			} else {
+				alert('Please check your Internet connectivity.')
+				//this.setState({ isConnected: false })
+				//failure(language.InternetConnection);
+			}
+		});
+	}
 	setResultData() {
+
 
 		// Lets find out quiz que, user's answers, score
 
@@ -173,7 +201,8 @@ class Quiz extends Component {
 		let attempted_que = 0
 		let queId = []
 		this.state.questionsList.map((question => {
-			if (question.attempted_ans !== 0) {
+
+			if (question.attempted_ans !== undefined && question.attempted_ans !== 0) {
 				attempted_que = attempted_que + 1
 				let obj = {}
 				obj.queId = question.id
@@ -193,7 +222,7 @@ class Quiz extends Component {
 		}))
 
 		let quiz_title = '';
-		quiz_title = this.state.quiztitle;
+		quiz_title = 'Quiz' + this.state.currentQuiz;
 		let userInfo = this.props.navigation.state.params.userInfo;
 		var path = 'result/' + firebase.auth().currentUser.uid + '/';
 		firebase.database().ref(path).update({
@@ -260,29 +289,6 @@ class Quiz extends Component {
 				<Text>Hello</Text>
 			</View>
 		);
-		// let bgColor = 'white';
-		// let bordercolor = color.darkGray
-		// if (item.id === attemptedAns) {
-		// 	bgColor = color.blue;
-		// 	bordercolor = color.blue;
-		// }
-		// return (
-		// 	<Text style={{ marginLeft: 10, color: color.darkGray }}>{'Hello'}</Text>
-		// 	// <View style={styles.ansview}>
-		// 	// 	<TouchableOpacity disabled={item.id === attemptedAns ? true : false}
-		// 	// 		onPress={() => {
-		// 	// 			//this.setAnswers(item);
-		// 	// 		}}>
-		// 	// 		<View style={[styles.circle, { backgroundColor: bgColor, borderColor: bordercolor }]}></View>
-		// 	// 	</TouchableOpacity>
-		// 	// 	<Text style={{ marginLeft: 10, color: color.darkGray }}>{item.answer}</Text>
-		// 	// 	{/* <TouchableOpacity
-
-		// 	// 		style={[styles.ansbutton, { backgroundColor: bgColor }]}>
-
-		// 	// 	</TouchableOpacity> */}
-		// 	// </View>
-		// );
 	}
 
 
@@ -350,23 +356,40 @@ class Quiz extends Component {
 			{
 				text: 'Yes',
 				onPress: () => {
-					this.props.navigation.navigate('Home');
+					// this.props.navigation.navigate('Home');
+					this.setResultData()
 				}
 			}
 		]);
 	}
 	render() {
 		let queTitle = this.state.quiztitle.toUpperCase();
+
+
+		let isNextEnable = false
+		let cIndex = this.queIndex
+
+		if (this.state.questionsList && this.state.questionsList.length > 0) {
+			let questionsList = this.state.questionsList
+			if (questionsList[cIndex].attempted_ans) {
+				if (questionsList[cIndex].attempted_ans !== 0) {
+					isNextEnable = true
+				}
+			}
+		}
+
 		return (
 			<View style={styles.container}>
+
 				<Header
-					leftImage={IMG.IC_END_QUIZ}
-					leftButtonPress={this.endQuiz.bind(this)}
+					rightImage={IMG.IC_QUIT}
+					rightButtonPress={this.endQuiz.bind(this)}
 					title={queTitle}
 					textColor={'white'}
 				/>
 
 				<View style={styles.viewcontainer}>
+
 					<Text style={styles.quenotext}>{'Question ' + (this.queIndex + 1) + ' of ' + this.state.questionsList.length}</Text>
 					<FlatList
 						ref={(ref) => {
@@ -378,11 +401,12 @@ class Quiz extends Component {
 						renderItem={this.renderItems}
 						scrollEnabled={false}
 						extraData={this.state}
+						showsHorizontalScrollIndicator={false}
 						keyExtractor={(value, index) => String(index)}
 					/>
 					<View style={styles.bottombuttonview}>
-						<TouchableOpacity
-							style={styles.nextbutton}
+						{/* <OutLineButton
+							title={'PREVIOUS'}
 							onPress={() => {
 								let newIndex = this.queIndex - 1;
 								if (this.queIndex > 0) {
@@ -395,20 +419,17 @@ class Quiz extends Component {
 										this.setPreviousData();
 									}, 300);
 								}
-							}}
-						>
-							<Text style={styles.ansText}>{'PREVIOUS'}</Text>
-						</TouchableOpacity>
-						{this.queIndex !== this.state.questionsList.length - 1 && (
-							<TouchableOpacity
-								style={styles.nextbutton}
-								onPress={() => {
 
+							}}>
+						</OutLineButton> */}
+						{this.queIndex !== this.state.questionsList.length - 1 && isNextEnable && (
+							<OutLineButton
+								title={'NEXT'}
+								onPress={() => {
+									let cIndex = this.state.currentindex
 									let newIndex = this.queIndex + 1;
 									this.queIndex = newIndex;
 									if (newIndex < this.state.questionsList.length) {
-										let cIndex = this.state.currentindex
-
 										let questionsList = this.state.questionsList
 										if (questionsList[cIndex].attempted_ans !== 0) {
 											questionsList[cIndex].isEnable = false
@@ -423,20 +444,17 @@ class Quiz extends Component {
 											this.setPreviousData();
 										}, 300);
 									}
-								}}
-							>
-								<Text style={styles.ansText}>{'NEXT'}</Text>
-							</TouchableOpacity>
+
+								}}>
+							</OutLineButton>
 						)}
 						{this.queIndex === this.state.questionsList.length - 1 && (
-							<TouchableOpacity
-								style={styles.nextbutton}
+							<OutLineButton title={'SUBMIT'}
 								onPress={() => {
-									this.setResultData();
-								}}
-							>
-								<Text style={styles.ansText}>{'SUBMIT'}</Text>
-							</TouchableOpacity>
+									this.checkConnectivity()
+									//this.setResultData();
+								}}>
+							</OutLineButton>
 						)}
 					</View>
 				</View>

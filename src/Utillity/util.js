@@ -1,3 +1,4 @@
+import NetInfo from "@react-native-community/netinfo";
 
 export const getRandromString = (lan) => {
     var length = lan;
@@ -6,3 +7,5 @@ export const getRandromString = (lan) => {
     for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
     return result;
 }
+
+

@@ -1,7 +1,8 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import color from '../../../color'
+import * as fonts from '../../../font/index'
 
-
+let screenWidth = Dimensions.get('screen').width
 export default styles = StyleSheet.create({
     safeareaview: {
         top: 0,
@@ -19,7 +20,7 @@ export default styles = StyleSheet.create({
         bottom: 10,
         alignItems: 'center',
         fontSize: 18,
-        fontWeight: 'bold'
+        fontFamily: fonts.Bold
     },
     iconStyleLeft: {
         height: 30,

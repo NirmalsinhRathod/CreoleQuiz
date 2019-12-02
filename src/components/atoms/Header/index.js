@@ -21,7 +21,7 @@ export default class Header extends Component {
                     <TouchableOpacity
                         style={styles.iconStyleRight}
                         onPress={rightButtonPress}>
-                        <Image style={{ height: 25, width: 25 }} resizeMode={'contain'} source={rightImage} />
+                        <Image style={{ height: 20, width: 20 }} resizeMode={'contain'} source={rightImage} />
                     </TouchableOpacity>
                 </View >
             </SafeAreaView>

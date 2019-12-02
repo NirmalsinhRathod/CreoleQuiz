@@ -4,4 +4,5 @@ import Loader from './Loader';
 import TextField from './TextField';
 import Tabbar from './Tabbar';
 import RadioButton from './RadioButton';
-export { Header, Button, Loader, TextField, Tabbar, RadioButton };
+import InternectConnectivity from './InternetConnectivity'
+export { Header, Button, Loader, TextField, Tabbar, RadioButton, InternectConnectivity };

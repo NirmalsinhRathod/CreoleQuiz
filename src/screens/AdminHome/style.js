@@ -1,9 +1,12 @@
 import { StyleSheet } from 'react-native';
-import color from '../../color'
+import color from '../../color';
+import * as fonts from '../../font'
 
 export default styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width: '100%',
+        height: '100%'
+        //flex: 1,
         // alignItems: 'center',
         // justifyContent: 'center',
     },
@@ -12,7 +15,11 @@ export default styles = StyleSheet.create({
         // justifyContent: 'center',
         // alignSelf: 'center',
         width: '100%',
-        marginTop: 45,
+    },
+    selectquiztext: {
+        alignSelf: 'center',
+        fontFamily: fonts.Bold,
+        fontSize: 18
     },
     numOfQue: {
         flexDirection: 'row',
@@ -53,8 +60,8 @@ export default styles = StyleSheet.create({
         alignItems: 'center',
         height: 60,
         borderBottomWidth: 0.5,
-        borderBottomColor: color.lightGray
-        // backgroundColor: 'skyblue'
+        borderBottomColor: color.lightGray,
+        //backgroundColor: 'skyblue'
     },
     btnStartQuiz: {
         height: 50,
@@ -65,5 +72,10 @@ export default styles = StyleSheet.create({
     },
     btnStartQuizTitle: {
         paddingHorizontal: 15
+    },
+    text: {
+        fontFamily: fonts.Medium,
+        fontSize: 15,
+        color: color.darkGray
     }
 });

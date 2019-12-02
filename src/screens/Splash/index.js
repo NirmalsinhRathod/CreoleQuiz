@@ -5,33 +5,79 @@ import * as resources from 'resources';
 import { StackNavigator } from 'react-navigation';
 import firebase from 'react-native-firebase';
 import CodePush from "react-native-code-push";
+import { StackActions, NavigationActions } from 'react-navigation';
+
 class Splash extends Component {
 	constructor(props) {
 		super(props);
 		this.state = { restartAllowed: true };
 
-		setTimeout(() => {
-			const navigation = this.props.navigation
-			firebase.auth().onAuthStateChanged(function (user) {
-				if (user) {
-					let phoneNum = user.phoneNumber
-					let userId = user.uid
-					firebase.database().ref('users/' + userId).once('value').then((snapshot) => {
-						if (snapshot.val() == null) {
-							navigation.navigate("SignUp", { 'phone': phoneNum })
-						} else {
-							if (snapshot.child('isAdmin').val() === 0) {
-								navigation.navigate('Home')
-							} else {
-								navigation.navigate('AdminHome')
-							}
-						}
-					});
+		// setTimeout(() => {
+		const navigation = this.props.navigation
+		if (firebase.auth().currentUser) {
+			// let phoneNum = user.phoneNumber
+			let userId = firebase.auth().currentUser.uid
+			let phone = firebase.auth().currentUser._user.phoneNumber
+			console.log(firebase.auth().currentUser._user.phoneNumber)
+			firebase.database().ref('users/' + userId).once('value').then((snapshot) => {
+				if (snapshot.val() == null) {
+					let user = snapshot.val()
+					navigation.navigate("SignUp", { 'phone': firebase.auth().currentUser.phoneNumber })
+					//navigation.navigate("SignUp")
 				} else {
-					navigation.navigate('Login');
+					if (snapshot.child('isAdmin').val() === 0) {
+						this.moveToHome()
+					} else {
+						this.moveToAdmin()
+					}
 				}
 			});
-		}, 1000);
+		} else {
+			this.moveToLogin()
+		}
+		// firebase.auth().onAuthStateChanged(function (user) {
+		// 	if (user) {
+		// 		alert('done')
+		// 		// let phoneNum = user.phoneNumber
+		// 		// let userId = user.uid
+		// 		// firebase.database().ref('users/' + userId).once('value').then((snapshot) => {
+		// 		// 	if (snapshot.val() == null) {
+		// 		// 		navigation.navigate("SignUp", { 'phone': phoneNum })
+		// 		// 	} else {
+		// 		// 		if (snapshot.child('isAdmin').val() === 0) {
+		// 		// 			navigation.navigate('Home')
+		// 		// 		} else {
+		// 		// 			navigation.navigate('AdminHome')
+		// 		// 		}
+		// 		// 	}
+		// 		// });
+		// 	} else {
+		// 		navigation.navigate('Login');
+		// 		// alert('Go To Login')
+		// 	}
+		// });
+		// }, 1000);
+	}
+	moveToLogin() {
+		const resetAction = StackActions.reset({
+			index: 0,
+			actions: [NavigationActions.navigate({ routeName: 'Login' })],
+		});
+		this.props.navigation.dispatch(resetAction);
+	}
+	moveToHome() {
+		const resetAction = StackActions.reset({
+			index: 0,
+			actions: [NavigationActions.navigate({ routeName: 'Home' })],
+		});
+		this.props.navigation.dispatch(resetAction);
+	}
+	moveToAdmin() {
+		const resetAction = StackActions.reset({
+			index: 0,
+			actions: [NavigationActions.navigate({ routeName: 'AdminHome' })],
+		});
+		this.props.navigation.dispatch(resetAction);
 	}
 	componentDidMount() {
 		this.syncImmediate()

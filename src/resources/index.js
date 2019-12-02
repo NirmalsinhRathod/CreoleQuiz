@@ -10,3 +10,5 @@ export const IC_BACK = require('./back.png');
 export const IC_SEARCH = require('./search.png');
 export const IC_CLEAR = require('./clear.png');
 export const IC_END_QUIZ = require('./end_quiz.png');
+export const IC_QUIT = require('./close.png');
+export const IC_INFO = require('./info.png');

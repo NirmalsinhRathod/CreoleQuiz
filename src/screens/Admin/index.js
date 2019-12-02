@@ -78,11 +78,15 @@ class Admin extends Component {
 		}
 	}
 	componentDidMount() {
-		var refer = firebase.database().ref();
-		refer.on('value', snapshot => {
-			if (snapshot.hasChild('result')) {
-				this.setState({ userAry: Object.values(snapshot.child('result').val()) })
-			}
+		var refer = firebase.database().ref('result');
+		refer.once('value', snapshot => {
+			//if (snapshot.hasChild('result')) {
+			//this.setState({ userAry: Object.values(snapshot.child('result').val()) })
+			//}
+			this.setState({
+				userAry: Object.values(snapshot.val())
+			})
+			//console.log(JSON.stringify(snapshot.val()))
 			// refer.once('value').then(snapshot => {
 
 		});
@@ -100,11 +104,11 @@ class Admin extends Component {
 					horizontal={true}
 					renderItem={({ item, index }) =>
 						<TouchableOpacity
-							onPress={() => this.setState({
-								selectedQuiz: index
-							})}
+							onPress={() =>
+								this.setState({ selectedQuiz: index })
+							}
 							style={[styles.quizButtons, { backgroundColor: this.state.selectedQuiz === index ? color.lightBlue : 'white', width: width }]}>
-							<Text>{item.key}</Text>
+							<Text style={styles.text}>{item.key}</Text>
 						</TouchableOpacity>}
 					numColumns={numColumns}
 				/>
@@ -119,9 +123,9 @@ class Admin extends Component {
 				return (
 					<View style={styles.searchResultContainer}>
 						<View style={styles.userData}>
-							<Text style={{ fontSize: 15, fontWeight: 'bold' }}>{item.name}</Text>
-							<Text style={{ marginTop: 5 }}>{item.phone}</Text>
-							<Text style={{ marginTop: 5 }}>{item.email}</Text>
+							<Text style={styles.nametext}>{item.name}</Text>
+							<Text style={styles.emailtext}>{item.phone}</Text>
+							<Text style={styles.emailtext}>{item.email}</Text>
 						</View>
 						{
 							data.length > 0 &&
